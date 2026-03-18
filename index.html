@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Through Evaluation</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Georgia", serif;
+      background: #faf9f7;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    header {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      max-width: 720px;
+    }
+
+    .authors {
+      font-size: 0.88rem;
+      color: #333;
+      margin-bottom: 0.75rem;
+      line-height: 1.8;
+    }
+
+    .authors sup {
+      font-size: 0.65rem;
+      color: #777;
+    }
+
+    .dagger {
+      color: #777;
+    }
+
+    .affiliations {
+      font-size: 0.78rem;
+      color: #666;
+      padding-left: 1.2rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.7;
+    }
+
+    .corresponding {
+      font-size: 0.78rem;
+      color: #666;
+    }
+
+    .corresponding a {
+      color: #555;
+    }
+
+    .corresponding a:hover {
+      color: #1a1a1a;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    .fig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 3rem;
+    }
+
+    .fig {
+      cursor: zoom-in;
+    }
+
+    .fig-img {
+      background: #f0ede8;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .fig-img img {
+      width: 100%;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.2s;
+    }
+
+    .fig:hover .fig-img img { opacity: 0.88; }
+
+    .fig-caption {
+      margin-top: 0.6rem;
+      font-size: 0.82rem;
+      color: #444;
+    }
+
+    .fig-caption strong {
+      font-style: normal;
+      color: #1a1a1a;
+    }
+
+    .fig-wide {
+      grid-column: span 2;
+    }
+
+    /* lightbox */
+    .lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 18, 15, 0.92);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+    }
+    .lb.open { display: flex; }
+
+    .lb-img {
+      max-width: 88vw;
+      max-height: 88vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lb-close {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .lb-close:hover { color: #fff; }
+
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #ddd;
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    @media (max-width: 640px) {
+      .fig-grid { grid-template-columns: 1fr; }
+      .fig-wide { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Research through Evaluation (RtE) for Large Language Models in Healthcare</h1>
+    <p class="authors">
+      Yuexing Hao<sup>1,3,4</sup>, Jason Holmes<sup>2</sup>, Jared Hobson<sup>3</sup>, Alexandra Bennett<sup>3</sup>, Elizabeth L. McKone<sup>3</sup>, Daniel K. Ebner<sup>3</sup>, David M. Routman<sup>3</sup>, Satomi Shiraishi<sup>3</sup>, Samir H. Patel<sup>3</sup>, Nathan Y. Yu<sup>2</sup>, Chris L. Hallemeier<sup>3</sup>, Brooke E. Ball<sup>3</sup>, Saleh Kalantari<sup>4</sup>, Marzyeh Ghassemi<sup>3</sup>, Mark Waddle<sup>3</sup>, Wei Liu<sup>1</sup> <span class="dagger">†</span>
+    </p>
+    <ol class="affiliations">
+      <li>Department of Radiation Oncology, Mayo Clinic, Phoenix, AZ, USA</li>
+      <li>Department of Radiation Oncology, Mayo Clinic, Rochester, MN, USA</li>
+      <li>Department of Electrical Engineering and Computer Science, Massachusetts Institute of Technology, Cambridge, MA, USA</li>
+      <li>Cornell University, Ithaca, NY, USA</li>
+    </ol>
+    <p class="corresponding"><span class="dagger">†</span> Corresponding authors: Yuexing Hao (<a href="mailto:yuexing@mit.edu">yuexing@mit.edu</a>), Wei Liu (<a href="mailto:liu.wei@mayo.edu">liu.wei@mayo.edu</a>)</p>
+  </header>
+
+  <main>
+    <div class="fig-grid">
+
+      <div class="fig fig-wide" onclick="lb('Fig/RtE_ Research through Evaluation.png')">
+        <div class="fig-img">
+          <img src="Fig/RtE_ Research through Evaluation.png" alt="Figure 1" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 1</strong> — The RtE framework overview.</p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/RtE_Development.png')">
+        <div class="fig-img">
+          <img src="Fig/RtE_Development.png" alt="Figure 2" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 2</strong> — Development pipeline.</p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/Readability_Combination.png')">
+        <div class="fig-img">
+          <img src="Fig/Readability_Combination.png" alt="Figure 3" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 3</strong> — Readability metrics.</p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/LLM_Graders_Radar.png')">
+        <div class="fig-img">
+          <img src="Fig/LLM_Graders_Radar.png" alt="Figure 4" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 4</strong> — LLM graders radar chart.</p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/Clinician Graders.png')">
+        <div class="fig-img">
+          <img src="Fig/Clinician Graders.png" alt="Figure 5" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 5</strong> — Clinician grader results.</p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/Three_Clinician_Results.png')">
+        <div class="fig-img">
+          <img src="Fig/Three_Clinician_Results.png" alt="Figure 6" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 6</strong> — Three-clinician comparison.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>2026 &mdash; Research Through Evaluation</footer>
+
+  <div class="lb" id="lb" onclick="closelb(event)">
+    <button class="lb-close" onclick="closelb()">&times;</button>
+    <img class="lb-img" id="lb-img" src="" alt="" />
+  </div>
+
+  <script>
+    function lb(src) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lb').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closelb(e) {
+      if (e && e.target !== document.getElementById('lb') && !e.target.classList.contains('lb-close')) return;
+      document.getElementById('lb').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closelb({}); });
+  </script>
+
+</body>
+</html>
