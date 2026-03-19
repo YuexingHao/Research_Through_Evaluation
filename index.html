@@ -196,9 +196,9 @@
     }
 
     .fig-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
     }
 
     .fig { cursor: zoom-in; }
@@ -224,15 +224,18 @@
     .fig:hover .fig-img img { transform: scale(1.02); opacity: 0.9; }
 
     .fig-caption {
-      margin-top: 0.55rem;
-      font-size: 0.8rem;
-      color: #555;
-      line-height: 1.5;
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: #444;
+      line-height: 1.6;
+      padding: 0 0.1rem;
     }
 
-    .fig-caption strong { color: #1a1a1a; }
+    .fig-caption strong {
+      color: #1a1a1a;
+      font-style: normal;
+    }
 
-    .fig-wide { grid-column: span 2; }
 
     /* ── Lightbox ── */
     .lb {
@@ -307,7 +310,6 @@
 
     @media (max-width: 600px) {
       .fig-grid { grid-template-columns: 1fr; }
-      .fig-wide { grid-column: span 1; }
       header h1 { font-size: 1.25rem; }
     }
   </style>
@@ -365,53 +367,58 @@
     <p class="section-label">Figures</p>
     <div class="fig-grid">
 
-      <div class="fig fig-wide" onclick="lb('Fig/Dark Version InBasket Message Workflow.gif')">
+      <div class="fig" onclick="lb('Fig/Dark Version InBasket Message Workflow.gif')">
         <div class="fig-img" style="background:#111;">
           <img src="Fig/Dark Version InBasket Message Workflow.gif" alt="Figure 1" loading="lazy" />
         </div>
         <p class="fig-caption"><strong>Fig. 1</strong> — In-basket message workflow overview.</p>
       </div>
 
-      <div class="fig fig-wide" onclick="lb('Fig/RtE_ Research through Evaluation.png')">
+      <div class="fig" onclick="lb('Fig/RtE_ Research through Evaluation.png')">
         <div class="fig-img">
           <img src="Fig/RtE_ Research through Evaluation.png" alt="Figure 2" loading="lazy" />
         </div>
-        <p class="fig-caption"><strong>Fig. 2</strong> — The RtE framework overview.</p>
-      </div>
-
-      <div class="fig" onclick="lb('Fig/RtE_Development.png')">
-        <div class="fig-img">
-          <img src="Fig/RtE_Development.png" alt="Figure 2" loading="lazy" />
-        </div>
-        <p class="fig-caption"><strong>Fig. 3</strong> — Development pipeline.</p>
+        <p class="fig-caption"><strong>Fig. 2</strong> — An overview of the RtE grading process involved clinicians, nurses, and LLM graders in the case study. The process follows a double diamond design structure (Structure C) in the X-Y plane, creating an iterative loop that alternates between defining questions and developing solutions. Multiple stakeholders, including nurse practitioners, nurses, clinicians, and LLMs (serving as graders or content generators), collaboratively develop both the questions and the evaluation metrics. In this study, the process starts from nurse practitioners to nurses, then to clinicians, and finally to LLMs, with each stakeholder participating in the define and (co-)develop phases of the double diamond. Along the Z-axis, multiple checkpoints are established throughout this iterative process to ensure the RtE grading methodology: (1) incorporates perspectives from all potential evaluators, (2) identifies and mitigates potential bias factors, and (3) refines evaluation metrics and verifies alignment with specific evaluation domains or fields.
+        </p>
       </div>
 
       <div class="fig" onclick="lb('Fig/Readability_Combination.png')">
         <div class="fig-img">
           <img src="Fig/Readability_Combination.png" alt="Figure 3" loading="lazy" />
         </div>
-        <p class="fig-caption"><strong>Fig. 4</strong> — Readability metrics.</p>
+        <p class="fig-caption"><strong>Fig. 3</strong> — Comparisons of Readability Scores across Six Scales. In-basket bot-generated responses and Clinical Care Team responses exhibit systematic differences, with clinical team responses showing higher readability across all six scales. Stars indicate statistical significance (** p &lt; 0.01, *** p &lt; 0.001).
+        </p>
       </div>
 
       <div class="fig" onclick="lb('Fig/LLM_Graders_Radar.png')">
         <div class="fig-img">
           <img src="Fig/LLM_Graders_Radar.png" alt="Figure 4" loading="lazy" />
         </div>
-        <p class="fig-caption"><strong>Fig. 5</strong> — LLM graders radar chart.</p>
+        <p class="fig-caption"><strong>Fig. 4</strong> — Radar chart comparing four dimensions across four LLM graders and the clinician average baseline. Using a zero-shot prompt engineering approach, GPT-4o rates in-basket bot responses with an average score of 17.70, and clinical care team responses with an average score of 15.83, both out of 20. Similarly, Gemini rates in-basket bot responses at an average of 15.05, and clinical care team responses at an average of 13.14, also out of 20. GPT-4 rates in-basket bot responses at an average of 17.7, for clinical team responses the average is 19.45. Llama 3.1 rates in-basket bot responses at an average of 15.5, for clinical team responses the average is 13.57.
+        </p>
+      </div>
+
+      <div class="fig" onclick="lb('Fig/RtE_Development.png')">
+        <div class="fig-img">
+          <img src="Fig/RtE_Development.png" alt="Figure 5" loading="lazy" />
+        </div>
+        <p class="fig-caption"><strong>Fig. 5</strong> — Overview of the grading process, involving clinicians and LLM graders. An example of the patient inquiry, the corresponding clinical team and in-basket bot responses are presented in the Supplementary Information.
+        </p>
       </div>
 
       <div class="fig" onclick="lb('Fig/Clinician Graders.png')">
         <div class="fig-img">
           <img src="Fig/Clinician Graders.png" alt="Figure 5" loading="lazy" />
         </div>
-        <p class="fig-caption"><strong>Fig. 6</strong> — Clinician grader results.</p>
+        <p class="fig-caption"><strong>Fig. 6</strong> — Overview of the grading process, involving clinicians and LLM graders. An example of the patient inquiry, the corresponding clinical team and in-basket bot responses are presented in the Supplementary Information.
+        </p>
       </div>
 
       <div class="fig" onclick="lb('Fig/Three_Clinician_Results.png')">
         <div class="fig-img">
           <img src="Fig/Three_Clinician_Results.png" alt="Figure 6" loading="lazy" />
         </div>
-        <p class="fig-caption"><strong>Fig. 7</strong> — Three-clinician comparison.</p>
+        <p class="fig-caption"><strong>Fig. 7</strong> — Detailed Results for Clinicians' Final Grading. The left figure compares the final scores given by three clinician graders for the In-Basket Bot and the Human Care Team. The right figure outlines the time-saving strategies used by the In-Basket Bot compared to the Clinical Care Team. Sample outputs highlighting substantial performance differences between the Clinical Care Team and In-Basket Bot responses are available in Appendix Table. (Note: * p < 0.05).</p>
       </div>
 
     </div>
