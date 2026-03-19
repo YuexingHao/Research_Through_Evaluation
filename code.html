@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code — Research Through Evaluation</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Georgia", serif;
+      background: #faf9f7;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    .logo-bar {
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .logo-bar img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      filter: grayscale(20%);
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 0 2rem;
+      display: flex;
+    }
+
+    nav a {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.85rem;
+      color: #555;
+      text-decoration: none;
+      padding: 0.7rem 1.1rem;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    nav a:hover { color: #1a1a1a; }
+    nav a.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    main h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    main > p {
+      font-size: 0.88rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .file-card {
+      border: 1px solid #ddd;
+      background: #fff;
+      margin-bottom: 1.4rem;
+    }
+
+    .file-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.9rem 1.2rem 0.7rem;
+      border-bottom: 1px solid #eee;
+      gap: 1rem;
+    }
+
+    .file-name {
+      font-family: "Courier New", monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .file-link {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #777;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .file-link:hover { color: #1a1a1a; }
+
+    .file-body {
+      padding: 0.8rem 1.2rem 1rem;
+    }
+
+    .file-purpose {
+      font-size: 0.88rem;
+      color: #333;
+      margin-bottom: 0.8rem;
+    }
+
+    .file-body h4 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    pre {
+      background: #f0ede8;
+      border: 1px solid #ddd;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.8rem;
+      font-family: "Courier New", monospace;
+      overflow-x: auto;
+      line-height: 1.6;
+      color: #2a2a2a;
+    }
+
+    .deps {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #ddd;
+      font-size: 0.8rem;
+      color: #999;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="Fig/Logo/mayo-logo.svg" alt="Mayo Clinic" />
+    <img src="Fig/Logo/MIT-Logo.png" alt="MIT" />
+    <img src="Fig/Logo/Cornell_University_Logo.png" alt="Cornell University" />
+  </div>
+
+  <nav>
+    <a href="index.html">Main</a>
+    <a href="data.html">Data</a>
+    <a href="code.html" class="active">Code</a>
+  </nav>
+
+  <main>
+    <h2>Code</h2>
+    <p>Analysis scripts for the RtE study. Both scripts run locally — no Colab required.</p>
+
+    <!-- category_analysis.py -->
+    <div class="file-card">
+      <div class="file-header">
+        <span class="file-name">category_analysis.py</span>
+        <a class="file-link" href="https://github.com/YuexingHao/Research_Through_Evaluation/blob/main/Code/category_analysis.py" target="_blank">View on GitHub ↗</a>
+      </div>
+      <div class="file-body">
+        <p class="file-purpose">
+          Analyses grading performance broken down by clinical topic category.
+          Merges category labels into the LLM output data, computes per-category
+          means for human and GPT graders, and produces a radar chart, bar chart,
+          donut chart, and a word cloud of grader comments.
+        </p>
+        <h4>Dependencies</h4>
+        <p class="deps">pandas · openpyxl · matplotlib · seaborn · wordcloud · nltk</p>
+        <h4>Usage</h4>
+        <pre>python Code/category_analysis.py
+
+# Point to a custom data folder and save figures elsewhere
+python Code/category_analysis.py --data-dir Data --out-dir Code/output</pre>
+        <h4>Outputs (saved to <code>Code/output/</code>)</h4>
+        <pre>radar_chart.png          # Per-category HBTotal — human vs GPT
+bar_chart.png            # Grouped bar chart by category
+donut_chart_plain.png    # Category distribution with mean annotations
+donut_chart_color_coded.png
+wordcloud.png            # Nouns/adjectives from grader comments
+Updated_clustered_LLM_outputs.xlsx</pre>
+      </div>
+    </div>
+
+    <!-- clinician_grading_analysis.py -->
+    <div class="file-card">
+      <div class="file-header">
+        <span class="file-name">clinician_grading_analysis.py</span>
+        <a class="file-link" href="https://github.com/YuexingHao/Research_Through_Evaluation/blob/main/Code/clinician_grading_analysis.py" target="_blank">View on GitHub ↗</a>
+      </div>
+      <div class="file-body">
+        <p class="file-purpose">
+          Full clinician grading analysis across three raters (Dr. H, Dr. B, Dr3)
+          and multiple study rounds. Computes descriptive statistics, intraclass
+          correlation (ICC) between rater pairs and across all raters, Wilcoxon /
+          Pearson / Cohen's Kappa tests between GPT and human responses, grader
+          bias, and generates figures for mean scores, error bars, editing
+          requirements, multi-round progression, and Round 5 LLM grader comparisons.
+        </p>
+        <h4>Dependencies</h4>
+        <p class="deps">pandas · openpyxl · matplotlib · seaborn · scipy · scikit-learn · pingouin · statsmodels</p>
+        <h4>Usage</h4>
+        <pre>python Code/clinician_grading_analysis.py
+
+# Custom paths
+python Code/clinician_grading_analysis.py --data-dir Data --out-dir Code/output
+
+# Skip ICC computation (faster during development)
+python Code/clinician_grading_analysis.py --skip-icc</pre>
+        <h4>Outputs (saved to <code>Code/output/</code>)</h4>
+        <pre>mean_scores_bar.png          # In-Basket Bot vs Clinical Care Team
+icc_bar.png                  # ICC1 vs ICC3k by criterion
+pairwise_bias_heatmap.png    # Pairwise grader bias (Completeness)
+overall_bias_bar.png         # Mean bias per grader
+bias_radar.png               # GPT & human bias across criteria
+clinician_errorbar_3graders.png
+editing_stacked_counts.png   # Editing requirement counts
+editing_stacked_percent.png  # Editing requirement percentages
+multi_round_bar.png          # Rounds 1–4 comparison
+llm_grader_scatter.png       # Round 5 LLM grader scatter
+trends_line.png              # Score trends across rounds
+ICC_Results_By_Category.csv</pre>
+      </div>
+    </div>
+
+    <h4 style="font-family:sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#888;margin-bottom:0.5rem;">Install all dependencies</h4>
+    <pre>pip install pandas openpyxl matplotlib seaborn scipy scikit-learn pingouin statsmodels wordcloud nltk
+python -m nltk.downloader punkt averaged_perceptron_tagger</pre>
+  </main>
+
+  <footer>2026 &mdash; Research Through Evaluation</footer>
+
+</body>
+</html>

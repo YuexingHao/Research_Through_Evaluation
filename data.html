@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data — Research Through Evaluation</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #faf9f7;
+      color: #1a1a1a;
+      line-height: 1.5;
+    }
+
+    .logo-bar {
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .logo-bar img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      filter: grayscale(20%);
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      font-size: 0.85rem;
+      color: #555;
+      text-decoration: none;
+      padding: 0.7rem 1.1rem;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    nav a:hover { color: #1a1a1a; }
+    nav a.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 2rem 1.2rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-header h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .page-header p {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .controls {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 1rem;
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .controls input {
+      font-size: 0.83rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #1a1a1a;
+      outline: none;
+      width: 280px;
+    }
+
+    .controls input:focus { border-color: #888; }
+
+    .controls select {
+      font-size: 0.83rem;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #1a1a1a;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .controls select:focus { border-color: #888; }
+
+    #row-count {
+      font-size: 0.78rem;
+      color: #999;
+      margin-left: auto;
+    }
+
+    .table-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #555;
+      background: #f0ede8;
+      border-bottom: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    tbody tr { border-bottom: 1px solid #eee; }
+    tbody tr:hover { background: #f5f3f0; }
+    tbody tr.resp-continuation td:first-child { border-top: 1px dashed #e8e5e0; }
+
+    tbody td {
+      padding: 0.65rem 0.8rem;
+      vertical-align: top;
+      color: #333;
+    }
+
+    .td-msg, .td-resp {
+      max-width: 340px;
+    }
+
+    .cell-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .cell-text.expanded {
+      display: block;
+      -webkit-line-clamp: unset;
+    }
+
+    .expand-btn {
+      display: inline-block;
+      margin-top: 0.3rem;
+      font-size: 0.73rem;
+      color: #888;
+      cursor: pointer;
+      user-select: none;
+    }
+    .expand-btn:hover { color: #1a1a1a; }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 2px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-gpt    { background: #e8f0fe; color: #3a5ec7; }
+    .badge-human  { background: #e8f5e9; color: #2e7d32; }
+    .badge-other  { background: #f5f5f5; color: #666; }
+
+    .td-cat { text-align: center; color: #888; }
+
+    /* pagination */
+    .pagination {
+      max-width: 1100px;
+      margin: 1.2rem auto 4rem;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .pagination button:hover:not(:disabled) { background: #f0ede8; }
+    .pagination button.current { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .pagination button:disabled { opacity: 0.35; cursor: default; }
+
+    .pagination span {
+      font-size: 0.78rem;
+      color: #999;
+      margin: 0 0.3rem;
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #ddd;
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    #loading { text-align: center; padding: 4rem; color: #999; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="Fig/Logo/mayo-logo.svg" alt="Mayo Clinic" />
+    <img src="Fig/Logo/MIT-Logo.png" alt="MIT" />
+    <img src="Fig/Logo/Cornell_University_Logo.png" alt="Cornell University" />
+  </div>
+
+  <nav>
+    <a href="index.html">Main</a>
+    <a href="data.html" class="active">Data</a>
+    <a href="code.html">Code</a>
+  </nav>
+
+  <div class="page-header">
+    <div>
+      <h2>In-Basket QA Dataset</h2>
+      <p>Patient messages and responses — LLM and clinician graders</p>
+    </div>
+    <a href="Data/In-Basket-QA-Dataset - Public.csv" download style="font-size:0.8rem;color:#555;text-decoration:none;border:1px solid #ccc;padding:0.4rem 0.8rem;background:#fff;">↓ Download CSV</a>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search messages or responses…" oninput="applyFilters()" />
+    <select id="type-filter" onchange="applyFilters()">
+      <option value="">All types</option>
+      <option value="In-Basket Bot">In-Basket Bot</option>
+      <option value="Clinicians">Clinicians</option>
+    </select>
+    <select id="cat-filter" onchange="applyFilters()">
+      <option value="">All categories</option>
+    </select>
+    <span id="row-count"></span>
+  </div>
+
+  <div class="table-wrap">
+    <div id="loading">Loading dataset…</div>
+    <table id="data-table" style="display:none">
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>Patient Message</th>
+          <th>Response</th>
+          <th>Type</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+
+  <footer>2026 &mdash; Research Through Evaluation</footer>
+
+  <script>
+    const PAGE_SIZE = 25;
+    let filtered = [];
+    let currentPage = 1;
+
+    // ── CSV parser (handles quoted fields with newlines) ──
+    function parseCSV(text) {
+      const rows = [];
+      let i = 0, n = text.length;
+      while (i < n) {
+        const row = [];
+        while (i < n) {
+          if (text[i] === '"') {
+            i++;
+            let field = '';
+            while (i < n) {
+              if (text[i] === '"' && text[i+1] === '"') { field += '"'; i += 2; }
+              else if (text[i] === '"') { i++; break; }
+              else { field += text[i++]; }
+            }
+            row.push(field);
+            if (text[i] === ',') i++;
+          } else {
+            let field = '';
+            while (i < n && text[i] !== ',' && text[i] !== '\n' && text[i] !== '\r') field += text[i++];
+            row.push(field.trim());
+            if (text[i] === ',') i++;
+          }
+          if (i >= n || text[i] === '\n' || text[i] === '\r') break;
+        }
+        while (i < n && (text[i] === '\n' || text[i] === '\r')) i++;
+        if (row.some(f => f !== '')) rows.push(row);
+      }
+      return rows;
+    }
+
+    // Group flat rows into message groups: [{msg, responses:[{resp,type,cat}]}]
+    function groupRows(rows) {
+      const groups = [];
+      let cur = null;
+      for (const r of rows) {
+        const msg = (r[0] || '').trim();
+        if (msg) {
+          cur = { msg, responses: [{ resp: r[1]||'', type: r[2]||'', cat: r[3]||'' }] };
+          groups.push(cur);
+        } else if (cur) {
+          cur.responses.push({ resp: r[1]||'', type: r[2]||'', cat: r[3]||'' });
+        }
+      }
+      return groups;
+    }
+
+    const CAT_NAMES = {
+      '1': 'Test Results',
+      '2': 'Side Effects',
+      '3': 'Medication Question',
+      '4': 'Radiation Treatment Question',
+      '5': 'Medical Oncology Question',
+      '6': 'Surgical Oncology Question',
+      '7': 'Care Coordination / Logistics',
+      '8': 'Lab / Radiology / Pathology Reports',
+      '9': 'Care Journey Questions'
+    };
+
+    function badgeHtml(type) {
+      const t = (type || '').trim().toLowerCase();
+      if (t === 'in-basket bot') return `<span class="badge badge-gpt">In-Basket Bot</span>`;
+      if (t === 'clinicians')    return `<span class="badge badge-human">Clinicians</span>`;
+      return `<span class="badge badge-other">${type}</span>`;
+    }
+
+    function cellHtml(text, id) {
+      const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return `<div class="cell-text" id="${id}">${safe}</div>
+              <span class="expand-btn" onclick="toggleCell('${id}', this)">show more</span>`;
+    }
+
+    function toggleCell(id, btn) {
+      const el = document.getElementById(id);
+      const expanded = el.classList.toggle('expanded');
+      btn.textContent = expanded ? 'show less' : 'show more';
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const type = document.getElementById('type-filter').value.toLowerCase();
+      const cat = document.getElementById('cat-filter').value;
+
+      filtered = allGroups.map(g => {
+        const responses = g.responses.filter(r => {
+          if (type && r.type.toLowerCase() !== type.toLowerCase()) return false;
+          if (cat && r.cat.trim() !== cat) return false;
+          if (q && !(g.msg.toLowerCase().includes(q) || r.resp.toLowerCase().includes(q))) return false;
+          return true;
+        });
+        return responses.length ? { msg: g.msg, responses } : null;
+      }).filter(Boolean);
+
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tbody');
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const slice = filtered.slice(start, start + PAGE_SIZE);
+      let html = '';
+      slice.forEach((g, gi) => {
+        const absGi = start + gi;
+        const catNum = (g.responses[0].cat || '').trim();
+        const catName = CAT_NAMES[catNum] || catNum;
+        g.responses.forEach((r, ri) => {
+          html += `<tr${ri > 0 ? ' class="resp-continuation"' : ''}>`;
+          if (ri === 0) {
+            html += `<td style="color:#bbb;font-size:0.75rem;vertical-align:top" rowspan="${g.responses.length}">${absGi + 1}</td>`;
+            html += `<td class="td-msg" rowspan="${g.responses.length}" style="border-right:1px solid #e8e5e0">${cellHtml(g.msg, `m-${absGi}`)}</td>`;
+          }
+          html += `<td class="td-resp">${cellHtml(r.resp, `r-${absGi}-${ri}`)}</td>`;
+          html += `<td style="white-space:nowrap;vertical-align:top">${badgeHtml(r.type)}</td>`;
+          if (ri === 0) {
+            html += `<td class="td-cat" rowspan="${g.responses.length}" style="font-size:0.78rem;color:#555;vertical-align:top;border-left:1px solid #e8e5e0">${catName}</td>`;
+          }
+          html += `</tr>`;
+        });
+      });
+      tbody.innerHTML = html;
+      const total = filtered.reduce((s, g) => s + g.responses.length, 0);
+      document.getElementById('row-count').textContent =
+        `${filtered.length.toLocaleString()} message${filtered.length !== 1 ? 's' : ''}, ${total.toLocaleString()} response${total !== 1 ? 's' : ''}`;
+    }
+
+    function renderPagination() {
+      const total = Math.ceil(filtered.length / PAGE_SIZE);
+      const pg = document.getElementById('pagination');
+      if (total <= 1) { pg.innerHTML = ''; return; }
+
+      let html = `<button ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">← Prev</button>`;
+
+      const pages = new Set();
+      pages.add(1); pages.add(total);
+      for (let p = currentPage - 2; p <= currentPage + 2; p++) if (p > 0 && p <= total) pages.add(p);
+      const sorted = [...pages].sort((a,b)=>a-b);
+      let prev = 0;
+      for (const p of sorted) {
+        if (p - prev > 1) html += `<span>…</span>`;
+        html += `<button class="${p===currentPage?'current':''}" onclick="goPage(${p})">${p}</button>`;
+        prev = p;
+      }
+
+      html += `<button ${currentPage===total?'disabled':''} onclick="goPage(${currentPage+1})">Next →</button>`;
+      pg.innerHTML = html;
+    }
+
+    function goPage(p) {
+      currentPage = p;
+      renderTable();
+      renderPagination();
+      document.querySelector('.table-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Load CSV ──
+    let allGroups = [];
+    fetch('Data/In-Basket-QA-Dataset - Public.csv')
+      .then(r => r.text())
+      .then(text => {
+        const rows = parseCSV(text);
+        allGroups = groupRows(rows.slice(1).filter(r => r.length >= 2));
+
+        // populate category filter
+        const cats = [...new Set(allGroups.flatMap(g => g.responses.map(r => r.cat.trim())).filter(Boolean))].sort((a,b)=>+a-+b);
+        const sel = document.getElementById('cat-filter');
+        cats.forEach(c => { const o = document.createElement('option'); o.value=c; o.textContent=CAT_NAMES[c] || `Category ${c}`; sel.appendChild(o); });
+
+        filtered = allGroups;
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('data-table').style.display = '';
+        renderTable();
+        renderPagination();
+      })
+      .catch(() => {
+        document.getElementById('loading').textContent = 'Failed to load dataset.';
+      });
+  </script>
+
+</body>
+</html>
