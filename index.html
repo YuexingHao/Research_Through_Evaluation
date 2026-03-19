@@ -247,6 +247,50 @@
     }
 
 
+    /* ── Inline table ── */
+    .tbl-block {
+      margin: 0;
+    }
+
+    .tbl-caption {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .tbl-caption strong { color: #1a1a1a; }
+
+    .tbl-wrap {
+      overflow-x: auto;
+    }
+
+    .rte-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .rte-table thead th {
+      background: #f0ede8;
+      border: 1px solid #ccc;
+      padding: 0.55rem 0.8rem;
+      font-weight: 600;
+      text-align: left;
+      color: #1a1a1a;
+      vertical-align: top;
+    }
+
+    .rte-table tbody td {
+      border: 1px solid #ddd;
+      padding: 0.6rem 0.8rem;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    .rte-table tbody tr:nth-child(even) td { background: #faf9f7; }
+
     /* ── Lightbox ── */
     .lb {
       display: none;
@@ -383,6 +427,48 @@
           <img src="Fig/Dark Version InBasket Message Workflow.gif" alt="Figure 1" loading="lazy" />
         </div>
         <p class="fig-caption"><strong>Fig. 1</strong> — In-basket message workflow overview.</p>
+      </div>
+
+      <div class="tbl-block">
+        <p class="tbl-caption"><strong>Table 1</strong> — Overview of the RtE Process.</p>
+        <div class="tbl-wrap">
+          <table class="rte-table">
+            <thead>
+              <tr>
+                <th># Round &amp; Evaluators</th>
+                <th>Pairs</th>
+                <th>Study Method Design</th>
+                <th>Metrics</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Round 1 Grading — Graders C1, C2</td>
+                <td>30 Pairs</td>
+                <td>Direct Comparison: GPT vs. Clinician</td>
+                <td>Clinician Metrics: 1) More Completeness; 2) More Correctness; 3) More Conciseness; 4) Trustworthiness; 5) Other Comments</td>
+              </tr>
+              <tr>
+                <td>Round 2 Grading — Graders C1, C2</td>
+                <td>15 Pairs</td>
+                <td>Randomized Single-Blinded Study</td>
+                <td>Clinician Metrics (Scale 1–5): 1) Completeness; 2) Correctness; 3) Conciseness; 4) Trustworthiness; 5) Extensive Editing Required; 6) Other Comments</td>
+              </tr>
+              <tr>
+                <td>Round 3 Grading — Graders C1, C2, C3; Grader C4; Grader C5</td>
+                <td>158 Pairs (316 Responses) &amp; 41 Responses &amp; 2 Responses</td>
+                <td>Clinician single-blind evaluation of responses from in-basket bot vs. clinical care team</td>
+                <td>Clinician Metrics (Scale 1–5): 1) Completeness; 2) Correctness; 3) Clarity; 4) Empathy; Metrics (Scale 0–3): 5) Editing Level; Short Answer (Minutes): 6) Estimate Time to Answer; 7) Other Comments</td>
+              </tr>
+              <tr>
+                <td>Round 4 Grading — Graders GPT-4, GPT-4o, Gemini 1.5-pro, Llama 3.1</td>
+                <td>158 Pairs (316 Responses)</td>
+                <td>LLM automated evaluation to validate its grading capability in comparison with clinician graders</td>
+                <td>LLM Graders Metrics (Scale 1–5): 1) Completeness; 2) Correctness; 3) Clarity; 4) Empathy</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="fig" onclick="lb('Fig/RtE_ Research through Evaluation.png')">
